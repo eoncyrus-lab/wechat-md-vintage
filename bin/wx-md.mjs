@@ -66,12 +66,20 @@ if (argv.includes('--preview')) {
 </style></head><body><div class="wrap">${fragment}</div></body></html>`;
   writeOrPrint(full, out);
 } else if (argv.includes('--copy')) {
+  // 把 HTML 以 text/html 格式写入剪贴板
+  // pbcopy 只处理 text/plain，粘到公众号会显示源码
+  // 这里通过 AppleScript 的 «class HTML» 写入富文本剪贴板
   try {
-    execSync('pbcopy', { input: fragment });
-    console.error('✓ 已复制到剪贴板，粘贴到公众号编辑器即可');
+    const hex = Buffer.from(fragment, 'utf-8').toString('hex').toUpperCase();
+    // AppleScript 的 hex 长度受限（单参数 ~100KB 没问题，更大要走文件）
+    const script = `set the clipboard to «data HTML${hex}»`;
+    execSync('osascript -e ' + JSON.stringify(script));
+    console.error(`✓ 已以富文本格式复制到剪贴板（${(fragment.length/1024).toFixed(1)} KB）`);
+    console.error(`  去公众号编辑器按 Cmd+V 粘贴即可`);
   } catch (e) {
-    console.error('pbcopy 失败（仅 macOS）:', e.message);
-    process.stdout.write(fragment);
+    console.error('复制失败:', e.message);
+    console.error('你可以直接用浏览器打开 preview.html，Cmd+A / Cmd+C 再粘贴。');
+    process.exit(1);
   }
 } else {
   const oi = argv.indexOf('-o');
