@@ -1,0 +1,11 @@
+node_modules/
+*.log
+.DS_Store
+.env
+.idea/
+.vscode/
+dist/
+*.tmp
+# 输出预览
+examples/*.preview.html
+examples/*.wechat.html

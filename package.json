@@ -1,0 +1,17 @@
+{
+  "name": "wechat-md-vintage",
+  "version": "0.1.0",
+  "description": "Markdown → 微信公众号（复古典雅主题）",
+  "type": "module",
+  "bin": {
+    "wx-md": "./bin/wx-md.mjs"
+  },
+  "scripts": {
+    "build": "node bin/wx-md.mjs",
+    "serve": "node bin/preview.mjs"
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.1"
+  }
+}
