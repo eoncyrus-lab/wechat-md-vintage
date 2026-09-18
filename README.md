@@ -24,7 +24,7 @@
 ## 安装
 
 ```bash
-git clone https://github.com/Ricaardo/wechat-md-vintage.git
+git clone https://github.com/eoncyrus-lab/wechat-md-vintage.git
 cd wechat-md-vintage
 npm install
 ```
